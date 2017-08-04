@@ -1,4 +1,4 @@
-unit FastQueue;
+unit FastDemo;
 
 interface
 //线程安全版本
@@ -26,8 +26,6 @@ type
     procedure Lock();
     procedure UnLock();
     procedure SetCapacity(const AValue: Integer);
-    //Pop 相关函数
-    procedure MoveMem;
     //
     procedure setSynCapacity(const AValue: Integer);
     function getSynCapacity: Integer;
@@ -119,7 +117,7 @@ begin
   end;
 end;
 
-function TFastQueue.Push(AItem: Pointer; APriority: Integer): Pointer;
+function TFastQueue.Push(AItem: Pointer): Pointer;
 var
   vPMem: PInteger;
   vNextPriority, vPriority, vIndex: Integer;
@@ -188,13 +186,13 @@ begin
   end;
 end;
 
-function TFastQueue.PushString(AItem: string; APriority: Integer): Pointer;
+function TFastQueue.PushString(AItem: string): Pointer;
 var
   vPChar: PChar;
 begin
   vPChar := StrAlloc(256);
   StrCopy(vPChar, pchar(AItem + '   |' + inttostr(FPushIndex)));
-  Push(vPChar, APriority);
+  Push(vPChar);
 end;
 
 function TFastQueue.PopString: string;
